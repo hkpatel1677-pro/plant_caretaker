@@ -1,0 +1,12 @@
+{% extends 'plants/base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Confirm Delete</h2>
+    <p>Are you sure you want to delete <strong>{{ plant.name }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn warn" type="submit">Yes, delete</button>
+        <a class="btn" href="{% url 'plant_list' %}">Cancel</a>
+    </form>
+</div>
+{% endblock %}

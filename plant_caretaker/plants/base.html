@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Plant Caretaker 🌱</title>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="topbar">
+        <div class="container">
+            <h1 class="brand">🌿 Plant Caretaker</h1>
+            <nav class="mainnav">
+                {% if user.is_authenticated %}
+                    <span class="who">Welcome, {{ user.username }}.</span>
+                    <a href="{% url 'dashboard' %}">Dashboard</a>
+                    <a href="{% url 'plant_list' %}">My Plants</a>
+                    <a href="{% url 'plant_create' %}">Add Plant</a>
+                    <a href="{% url 'user_registration' %}">Profile</a>
+                    <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Login</a>
+                    <a href="{% url 'signup' %}">Sign Up</a>
+                {% endif %}
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            <div class="messages">
+                {% for m in messages %}
+                    <div class="msg {{ m.tags }}">{{ m }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="container">© Plant Caretaker — built with care 🌱</div>
+    </footer>
+</body>
+</html>

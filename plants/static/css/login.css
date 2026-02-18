@@ -1,0 +1,4 @@
+/* login.css */
+.auth-card{max-width:420px;margin:40px auto;padding:20px;border-radius:12px;background:white;box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+.auth-card h2{text-align:center;margin-bottom:12px}
+.field input{width:100%;padding:8px;margin:6px 0;border-radius:6px;border:1px solid #ddd}

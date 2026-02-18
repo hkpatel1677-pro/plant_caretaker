@@ -1,0 +1,36 @@
+/* base.css */
+:root{
+    --bg:#f6fff7;
+    --card:#ffffff;
+    --accent:#2e7d32;
+    --muted:#6b6b6b;
+    --shadow: 0 6px 18px rgba(20,20,20,0.06);
+    --radius:10px;
+    --maxw:980px;
+  }
+  *{box-sizing:border-box}
+  body{
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: linear-gradient(180deg,#f0fff4, #e8fff1);
+    color:#12321a;
+    margin:0;
+  }
+  .container{max-width:var(--maxw);margin:24px auto;padding:0 18px}
+  .topbar{background:transparent;padding:14px 0;border-bottom:1px solid rgba(0,0,0,0.04)}
+  .brand{display:inline-block;margin:0;color:var(--accent)}
+  .mainnav{float:right}
+  .mainnav a{margin-left:12px;color:var(--accent);text-decoration:none}
+  h1,h2,h3{margin:0 0 8px}
+  .card{background:var(--card);padding:18px;border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .wide{grid-column:span 2}
+  .form-card{max-width:720px;margin:0 auto}
+  .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  .btn.small{padding:6px 8px;font-size:0.9rem}
+  .btn.warn{background:#c62828}
+  .messages .msg{padding:8px;margin-bottom:8px;border-radius:8px}
+  .nice-table{width:100%;border-collapse:collapse}
+  .nice-table th, .nice-table td{padding:10px;border-bottom:1px solid rgba(0,0,0,0.06);text-align:left}
+  .actions .btn{margin-right:8px}
+  .footer{padding:12px;text-align:center;color:var(--muted);font-size:0.9rem;margin-top:28px}
+  

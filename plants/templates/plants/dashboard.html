@@ -1,0 +1,55 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+{% block content %}
+<div class="grid">
+    <div class="card">
+        <h3>Summary</h3>
+        <p>Total plants: <strong>{{ total_plants }}</strong></p>
+        {% if profile %}
+            <p>Name: {{ profile.full_name }}</p>
+        {% endif %}
+    </div>
+
+    <div class="card wide">
+        <h3>Upcoming watering (next items)</h3>
+        {% if upcoming_schedules %}
+            <table class="nice-table">
+                <thead><tr><th>Plant</th><th>Date</th><th>Time</th><th>Done</th></tr></thead>
+                <tbody>
+                    {% for s in upcoming_schedules %}
+                    <tr>
+                        <td>{{ s.plant.name }}</td>
+                        <td>{{ s.scheduled_date }}</td>
+                        <td>{{ s.scheduled_time }}</td>
+                        <td>
+                            <form method="post" action="{% url 'schedule_toggle_done' s.pk %}">
+                                {% csrf_token %}
+                                <button class="small" type="submit">{% if s.done %}Undo{% else %}Mark Done{% endif %}</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No upcoming items. Add a plant to get a schedule.</p>
+        {% endif %}
+    </div>
+
+    <div class="card wide">
+        <h3>Missed waterings</h3>
+        {% if missed_schedules %}
+            <ul>
+                {% for s in missed_schedules %}
+                    <li>{{ s.plant.name }} on {{ s.scheduled_date }} — <form style="display:inline" method="post" action="{% url 'schedule_toggle_done' s.pk %}">{% csrf_token %}<button class="small" type="submit">Mark Done</button></form></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>None — good job!</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

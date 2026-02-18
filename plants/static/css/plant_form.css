@@ -1,0 +1,5 @@
+/* plant_form.css */
+.form-card label{display:block;margin-top:10px;font-weight:600}
+.form-card input[type="text"], .form-card textarea, .form-card select, .form-card input[type="time"], .form-card input[type="number"]{
+  width:100%;padding:8px;border-radius:8px;border:1px solid #ddd;margin-top:6px;
+}

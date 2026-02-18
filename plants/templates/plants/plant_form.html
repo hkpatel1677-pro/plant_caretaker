@@ -1,0 +1,21 @@
+{% extends 'plants/base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/plant_form.css' %}">
+{% endblock %}
+{% block content %}
+<div class="card form-card">
+    <h2>{{ form_title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label>{{ form.name.label }}</label>{{ form.name }}
+        <label>{{ form.description.label }}</label>{{ form.description }}
+        <label>{{ form.care_instructions.label }}</label>{{ form.care_instructions }}
+        <label>{{ form.water_frequency.label }}</label>{{ form.water_frequency }}
+        <label>{{ form.custom_interval.label }}</label>{{ form.custom_interval }}
+        <label>{{ form.water_time.label }}</label>{{ form.water_time }}
+        <button class="btn" type="submit">{{ button_text }}</button>
+    </form>
+</div>
+{% endblock %}
