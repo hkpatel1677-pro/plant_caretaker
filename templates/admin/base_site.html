@@ -1,0 +1,23 @@
+{% extends "admin/base.html" %}
+
+{% block extrahead %}
+    {{ block.super }}
+    {% if user.is_authenticated %}
+    <script>
+        (function () {
+            history.replaceState(null, document.title, location.href);
+            history.pushState(null, document.title, location.href);
+
+            window.addEventListener('popstate', function () {
+                history.go(1);
+            });
+
+            window.addEventListener('pageshow', function (event) {
+                if (event.persisted) {
+                    history.go(1);
+                }
+            });
+        })();
+    </script>
+    {% endif %}
+{% endblock %}

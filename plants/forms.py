@@ -1,13 +1,27 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from .models import Plant, UserRegistration
+
+class LoginForm(AuthenticationForm):
+    username = forms.CharField(widget=forms.TextInput(attrs={'autocomplete': 'username'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'autocomplete': 'current-password'}))
+
 
 class SignUpForm(UserCreationForm):
     email = forms.EmailField(required=True)
     full_name = forms.CharField(required=False)
     dob = forms.DateField(required=False, widget=forms.DateInput(attrs={'type': 'date'}))
     phone = forms.CharField(required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({'autocomplete': 'username'})
+        self.fields['email'].widget.attrs.update({'autocomplete': 'email'})
+        self.fields['password1'].widget.attrs.update({'autocomplete': 'new-password'})
+        self.fields['password2'].widget.attrs.update({'autocomplete': 'new-password'})
+        self.fields['full_name'].widget.attrs.update({'autocomplete': 'name'})
+        self.fields['phone'].widget.attrs.update({'autocomplete': 'tel'})
 
     class Meta:
         model = User
@@ -17,7 +31,13 @@ class UserRegistrationForm(forms.ModelForm):
     class Meta:
         model = UserRegistration
         fields = ['full_name', 'dob', 'phone', 'address', 'course']
-        widgets = {'dob': forms.DateInput(attrs={'type': 'date'})}
+        widgets = {
+            'full_name': forms.TextInput(attrs={'autocomplete': 'name'}),
+            'dob': forms.DateInput(attrs={'type': 'date'}),
+            'phone': forms.TextInput(attrs={'autocomplete': 'tel'}),
+            'address': forms.Textarea(attrs={'autocomplete': 'street-address', 'rows': 3}),
+            'course': forms.TextInput(attrs={'autocomplete': 'organization-title'}),
+        }
 
 class PlantForm(forms.ModelForm):
     class Meta:

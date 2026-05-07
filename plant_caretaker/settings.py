@@ -1,9 +1,23 @@
 from pathlib import Path
+import os
+
+from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = 'django-insecure-replace-this-with-a-random-key'  # change if needed
+# Load environment variables from a local .env file (development only)
+load_dotenv(BASE_DIR / '.env')
+
+# SECRET_KEY should be provided via the environment variable `DJANGO_SECRET_KEY`.
+# For development (when DEBUG=True) a fallback insecure key is allowed, but
+# in production we raise an error if the key is missing.
 DEBUG = True
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        SECRET_KEY = 'django-insecure-replace-this-with-a-random-key'
+    else:
+        raise RuntimeError('DJANGO_SECRET_KEY environment variable not set')
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [

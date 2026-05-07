@@ -6,7 +6,7 @@
 {% block content %}
 <div class="auth-card">
     <h2>Login</h2>
-    <form method="post">
+    <form method="post" autocomplete="off">
         {% csrf_token %}
         {{ form.non_field_errors }}
         <div class="field">

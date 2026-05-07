@@ -4,12 +4,12 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils import timezone
+from django.views.decorators.cache import cache_control
 from datetime import date, timedelta
 
-from .forms import SignUpForm, PlantForm, UserRegistrationForm
+from .forms import SignUpForm, PlantForm, UserRegistrationForm, LoginForm
 from .models import Plant, WaterSchedule, UserRegistration
 
-from django.contrib.auth.forms import AuthenticationForm
 from django.urls import reverse
 
 def signup_view(request):
@@ -33,19 +33,20 @@ def login_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard')
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(request, data=request.POST)
         if form.is_valid():
             user = form.get_user()
             login(request, user)
             return redirect('dashboard')
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'plants/login.html', {'form': form})
 
 def logout_view(request):
     logout(request)
     return redirect('login')
 
+@cache_control(no_cache=True, no_store=True, must_revalidate=True, max_age=0)
 @login_required
 def dashboard(request):
     # summary and upcoming schedule
@@ -79,6 +80,7 @@ def user_registration(request):
         profile_form = UserRegistrationForm(instance=profile)
     return render(request, 'plants/user_registration.html', {'profile_form': profile_form})
 
+@cache_control(no_cache=True, no_store=True, must_revalidate=True, max_age=0)
 @login_required
 def plant_list(request):
     plants = request.user.plants.all()
